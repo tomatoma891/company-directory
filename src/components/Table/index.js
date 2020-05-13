@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import API from '../../utils/API';
-import TableHeader from '../TableHeader';
+import "./style.css"
 import Nav from '../Nav';
 
 
@@ -18,49 +18,59 @@ const Table = () => {
 
     const searchFilter = (e) => {
         const filter = e.target.value;
+        console.log(filter);
         const filteredUserList = users.filter(item => {
             let values = Object.values(item).join("").toLowerCase();
             return values.indexOf(filter.toLowerCase()) !== -1;
         });
+        console.log(filteredUserList);
         setFilteredUsers(filteredUserList);
     }
 
-    const sortNames = (e) => {
-        if (sortOrder) {
-            console.log('test button')
-            setSortOrder('descend')
-            setFilteredUsers(filteredUsers.reverse())
-        }
-    }
 
     return (
-        <>
+        <div>
+
             <Nav searchFilter={searchFilter} />
 
-            <button type="button" className="btn btn-primary mt-2" onClick={sortNames} >Re-Sort Names</button>
 
-            <table className='table table-hover mt-5'>
-                <tbody>
-                    <TableHeader />
-                    {filteredUsers.map(({ login, name, picture, phone, email, dob }) => {
-                        return (
+            <div className="row">
+                {filteredUsers.map(({ login, name, picture, phone, email, dob }) => {
+                    return (
+                        <div class="col-md-3">
+                            <div className="card">
+                                <tr key={login.uuid}>
+                                    <div className="img-container">
+                                        <img alt={name} src={picture.thumbnail} />
+                                    </div>
+                                    <div className="content">
+                                        <ul>
+                                            <li>
+                                                <strong>Name:</strong> {name.first} {name.last}
+                                            </li>
+                                            <li>
+                                                <strong>Phone:</strong> {phone}
+                                            </li>
+                                            <li>
+                                                <strong>Email:</strong> {email}
+                                            </li>
+                                            <li>
+                                                <strong>Age:</strong> {dob.age}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </tr>
+                            </div>
+                        </div>
+                    );
+                })};
+                </div>
 
-                            <tr key={login.uuid}>
-                                <td> <img src={picture.thumbnail} alt={name} /></td>
-                                <td>{name.first} {name.last}</td>
-                                <td>{phone}</td>
-                                <td>{email}</td>
-                                <td>{dob.age}</td>
-                            </tr>
-                        )
-                    })}
-                </tbody>
-            </table>
+        </div>
 
-
-        </>
-    )
-
+    );
 }
+
+
 
 export default Table;
