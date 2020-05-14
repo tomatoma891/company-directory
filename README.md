@@ -13,7 +13,7 @@ As a user, I want to be able to view my entire employee directory at once so tha
 * Sort the table by at least one category.
 
 ## Visuals:
-
+! [](/src/utils/images/visuals.png)
 
 ## What I learned: 
 * Reusable React components
